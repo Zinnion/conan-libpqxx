@@ -10,7 +10,7 @@ from conans.errors import ConanInvalidConfiguration
 class LibpqxxRecipe(ConanFile):
     name = "libpqxx"
     version = "6.4.4"
-    settings = "os", "compiler", "build_type", "arch", "cppstd"
+    settings = "os", "compiler", "build_type", "arch"
     description = "The official C++ client API for PostgreSQL"
     url = "https://github.com/zinnion/conan-libpqxx"
     homepage = "https://github.com/jtv/libpqxx"
@@ -95,7 +95,8 @@ class LibpqxxRecipe(ConanFile):
                 autotools.install()
 
     def package_info(self):
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.libs = ["pqxx", "pq"]
+        #self.cpp_info.libs = tools.collect_libs(self)
         if self.settings.os == "Windows":
             self.cpp_info.libs.append("Ws2_32")
         elif self.settings.os == "Linux":
